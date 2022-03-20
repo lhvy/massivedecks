@@ -796,17 +796,26 @@ translate _ mdString =
         SourceServiceFailure { source } ->
             [ ref source, Text " ha fallado en conseguir la baraja. Porfavor prueba más tarde o cambia de proveedor." ]
 
+        DeckCodeShort ->
+            [ Text "Un codigo de baraja tiene que ser de al menos 5 caracteres." ]
+
         ManyDecks ->
             [ Text "Many Decks" ]
 
         ManyDecksDeckCodeTitle ->
             [ Text "Codigo de la Baraja" ]
 
-        ManyDecksDeckCodeShort ->
-            [ Text "Un codigo de baraja tiene que ser de al menos 5 caracteres." ]
-
         ManyDecksWhereToGet ->
             [ Text "Puedes crear y obtener barajas en ", ref ManyDecks, Text "." ]
+
+        CrCast ->
+            [ Text "CrCast" ]
+
+        CrCastDeckCodeTitle ->
+            [ Text "Codigo de la Baraja" ]
+
+        CrCastWhereToGet ->
+            [ Text "Puedes crear y obtener barajas en ", ref CrCast, Text "." ]
 
         JsonAgainstHumanity ->
             [ Text "JSON Against Humanity" ]

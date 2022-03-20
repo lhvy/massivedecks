@@ -921,17 +921,26 @@ translate maybeDeclCase mdString =
         SourceServiceFailure { source } ->
             [ ref source, Text " nie mógł z jakiegoś powodu odesłać talii. Spróbuj ponownie później lub skorzystaj z innego źródła." ]
 
+        DeckCodeShort ->
+            [ Text "Kod talii musi mieć co najmniej 5 znaków." ]
+
         ManyDecks ->
             [ Text "Many Decks" ]
 
         ManyDecksDeckCodeTitle ->
             [ Text "Kod talii" ]
 
-        ManyDecksDeckCodeShort ->
-            [ Text "Kod talii musi mieć co najmniej 5 znaków." ]
-
         ManyDecksWhereToGet ->
             [ Text "Możesz stworzyć lub znaleźć talie na ", ref ManyDecks, Text "." ]
+
+        CrCast ->
+            [ Text "CrCast" ]
+
+        CrCastDeckCodeTitle ->
+            [ Text "Kod talii" ]
+
+        CrCastWhereToGet ->
+            [ Text "Możesz stworzyć lub znaleźć talie na ", ref CrCast, Text "." ]
 
         JsonAgainstHumanity ->
             [ Text "JSON Against Humanity" ]

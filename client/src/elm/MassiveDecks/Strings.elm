@@ -257,10 +257,13 @@ type MdString
     | RemoveDeck -- A description of the action of removing a deck from the game configuration.
     | SourceNotFound { source : MdString } -- An explanation that the deck didn't load because it doesn't exist on the source service.
     | SourceServiceFailure { source : MdString } -- An explanation that the deck didn't load because the source service is currently failing.
+    | DeckCodeShort -- A description of the problem where a deck code must be at least five characters.
     | ManyDecks -- The name of the Many Decks source.
     | ManyDecksDeckCodeTitle -- A term referring to a deck code for Many Decks.
-    | ManyDecksDeckCodeShort -- A description of the problem where a deck code must be at least five characters.
     | ManyDecksWhereToGet -- A description of how to get deck codes from Many Decks.
+    | CrCast -- The name of the CrCast source.
+    | CrCastDeckCodeTitle -- A term referring to a deck code for CrCast.
+    | CrCastWhereToGet -- A description of how to get deck codes from CrCast.
     | JsonAgainstHumanity -- The name of the JSON Against Humanity source.
     | JsonAgainstHumanityAbout -- A short description of the JSON Against Humanity source.
     | BuiltIn -- A term referring to decks of cards that are provided by this instance of the game.

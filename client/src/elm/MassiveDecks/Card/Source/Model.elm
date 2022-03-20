@@ -13,6 +13,7 @@ module MassiveDecks.Card.Source.Model exposing
 
 import Json.Decode as Json
 import MassiveDecks.Card.Source.BuiltIn.Model as BuiltIn
+import MassiveDecks.Card.Source.CrCast.Model as CrCast
 import MassiveDecks.Card.Source.Generated.Model as Generated
 import MassiveDecks.Card.Source.JsonAgainstHumanity.Model as JsonAgainstHumanity
 import MassiveDecks.Card.Source.ManyDecks.Model as ManyDecks
@@ -23,6 +24,7 @@ import MassiveDecks.Card.Source.ManyDecks.Model as ManyDecks
 type General
     = GBuiltIn
     | GManyDecks
+    | GCrCast
     | GJsonAgainstHumanity
 
 
@@ -50,6 +52,7 @@ sources are more limited and specific.
 type External
     = BuiltIn BuiltIn.Id
     | ManyDecks ManyDecks.DeckCode
+    | CrCast CrCast.DeckCode
     | JsonAgainstHumanity JsonAgainstHumanity.Id
 
 
@@ -85,6 +88,7 @@ type LoadFailureReason
 type alias Info =
     { builtIn : Maybe BuiltIn.Info
     , manyDecks : Maybe ManyDecks.Info
+    , crCast : Maybe CrCast.Info
     , jsonAgainstHumanity : Maybe JsonAgainstHumanity.Info
     }
 
@@ -100,6 +104,9 @@ generalToString source =
         GManyDecks ->
             "ManyDecks"
 
+        GCrCast ->
+            "CrCast"
+
         GJsonAgainstHumanity ->
             "JAH"
 
@@ -114,6 +121,9 @@ generalFromString sourceName =
 
         "ManyDecks" ->
             Just GManyDecks
+
+        "CrCast" ->
+            Just GCrCast
 
         "JAH" ->
             Just GJsonAgainstHumanity

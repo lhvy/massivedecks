@@ -19,6 +19,7 @@ module MassiveDecks.Card.Source exposing
 import Html exposing (Html)
 import Html.Attributes as HtmlA
 import MassiveDecks.Card.Source.BuiltIn as BuiltIn
+import MassiveDecks.Card.Source.CrCast as CrCast
 import MassiveDecks.Card.Source.Custom as Player
 import MassiveDecks.Card.Source.Fake as Fake
 import MassiveDecks.Card.Source.Generated as Generated
@@ -72,6 +73,9 @@ generalMethods source =
 
         GManyDecks ->
             ManyDecks.generalMethods
+
+        GCrCast ->
+            CrCast.generalMethods
 
         GJsonAgainstHumanity ->
             JsonAgainstHumanity.generalMethods
@@ -185,6 +189,7 @@ generalEditor shared existing currentValue update submit noOp =
         enabledSources =
             [ shared.sources.builtIn |> Maybe.map (\_ -> BuiltIn.generalMethods)
             , shared.sources.manyDecks |> Maybe.map (\_ -> ManyDecks.generalMethods)
+            , shared.sources.crCast |> Maybe.map (\_ -> CrCast.generalMethods)
             , shared.sources.jsonAgainstHumanity |> Maybe.map (\_ -> JsonAgainstHumanity.generalMethods)
             ]
 
@@ -263,6 +268,9 @@ externalMethods external =
     case external of
         ManyDecks url ->
             ManyDecks.methods url
+
+        CrCast url ->
+            CrCast.methods url
 
         BuiltIn id ->
             BuiltIn.methods id

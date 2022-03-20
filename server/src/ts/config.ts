@@ -56,6 +56,13 @@ interface BaseManyDecks<D extends Duration> {
 }
 export type ManyDecks = BaseManyDecks<ParsedDuration>;
 
+interface BaseCrCast<D extends Duration> {
+  baseUrl: string;
+  timeout: D;
+  simultaneousConnections: number;
+}
+export type CrCast = BaseCrCast<ParsedDuration>;
+
 export interface JsonAgainstHumanity {
   aboutUrl: string;
   url: string;
@@ -64,6 +71,7 @@ export interface JsonAgainstHumanity {
 interface BaseSources<D extends Duration> {
   builtIn?: BuiltIn;
   manyDecks?: BaseManyDecks<D>;
+  crCast?: BaseCrCast<D>;
   jsonAgainstHumanity?: JsonAgainstHumanity;
 }
 export type Sources = BaseSources<ParsedDuration>;
@@ -160,10 +168,19 @@ const parseManyDecks = (
   timeout: parseDuration(manyDecks.timeout),
 });
 
+const parseCrCast = (crCast: BaseCrCast<UnparsedDuration>): CrCast => ({
+  ...crCast,
+  baseUrl: crCast.baseUrl.endsWith("/") ? crCast.baseUrl : crCast.baseUrl + "/",
+  timeout: parseDuration(crCast.timeout),
+});
+
 const parseSources = (sources: BaseSources<UnparsedDuration>): Sources => ({
   ...(sources.builtIn !== undefined ? { builtIn: sources.builtIn } : {}),
   ...(sources.manyDecks !== undefined
     ? { manyDecks: parseManyDecks(sources.manyDecks) }
+    : {}),
+  ...(sources.crCast !== undefined
+    ? { crCast: parseCrCast(sources.crCast) }
     : {}),
   ...(sources.jsonAgainstHumanity !== undefined
     ? { jsonAgainstHumanity: sources.jsonAgainstHumanity }

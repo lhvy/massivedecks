@@ -228,6 +228,20 @@ export const Schema = {
       required: ["from", "op", "path"],
       type: "object",
     },
+    CrCast: {
+      additionalProperties: false,
+      properties: {
+        deckCode: {
+          type: "string",
+        },
+        source: {
+          enum: ["CrCast"],
+          type: "string",
+        },
+      },
+      required: ["deckCode", "source"],
+      type: "object",
+    },
     CreateLobby: {
       additionalProperties: false,
       description: "The details needed to create a new lobby.",
@@ -347,6 +361,9 @@ export const Schema = {
       anyOf: [
         {
           $ref: "#/definitions/ManyDecks",
+        },
+        {
+          $ref: "#/definitions/CrCast",
         },
         {
           $ref: "#/definitions/JsonAgainstHumanity",

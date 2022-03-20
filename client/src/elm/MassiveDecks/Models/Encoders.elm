@@ -27,6 +27,7 @@ import Json.Encode as Json
 import MassiveDecks.Card.Parts as Parts exposing (Parts)
 import MassiveDecks.Card.Parts.Part as Part exposing (Style)
 import MassiveDecks.Card.Source.BuiltIn.Model as BuiltIn
+import MassiveDecks.Card.Source.CrCast.Model as CrCast
 import MassiveDecks.Card.Source.JsonAgainstHumanity.Model as JsonAgainstHumanity
 import MassiveDecks.Card.Source.ManyDecks.Model as ManyDecks
 import MassiveDecks.Card.Source.Model as Source
@@ -375,6 +376,12 @@ source s =
             Json.object
                 [ ( "source", "ManyDecks" |> Json.string )
                 , ( "deckCode", deckCode |> ManyDecks.encode )
+                ]
+
+        Source.CrCast deckCode ->
+            Json.object
+                [ ( "source", "CrCast" |> Json.string )
+                , ( "deckCode", deckCode |> CrCast.encode )
                 ]
 
         Source.BuiltIn id ->

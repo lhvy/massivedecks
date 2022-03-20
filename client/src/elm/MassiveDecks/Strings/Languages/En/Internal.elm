@@ -772,17 +772,26 @@ translate _ mdString =
         SourceServiceFailure { source } ->
             [ ref source, Text " failed to provide the deck. Please try again later or try another source." ]
 
+        DeckCodeShort ->
+            [ Text "A deck code must be at least five characters long." ]
+
         ManyDecks ->
             [ Text "Many Decks" ]
 
         ManyDecksDeckCodeTitle ->
             [ Text "Deck Code" ]
 
-        ManyDecksDeckCodeShort ->
-            [ Text "A deck code must be at least five characters long." ]
-
         ManyDecksWhereToGet ->
             [ Text "You can create and find decks to play with at ", ref ManyDecks, Text "." ]
+
+        CrCast ->
+            [ Text "CrCast" ]
+
+        CrCastDeckCodeTitle ->
+            [ Text "Deck Code" ]
+
+        CrCastWhereToGet ->
+            [ Text "You can create and find decks to play with at ", ref CrCast, Text "." ]
 
         JsonAgainstHumanity ->
             [ Text "JSON Against Humanity" ]

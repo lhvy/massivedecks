@@ -6,6 +6,7 @@ import * as Config from "../../config";
 import * as BuiltIn from "./sources/builtIn";
 import { SourceNotFoundError } from "../../errors/action-execution-error";
 import * as ManyDecks from "./sources/many-decks";
+import * as CrCast from "./sources/crcast";
 import * as JsonAgainstHumanity from "./sources/json-against-humanity";
 import * as Generated from "./sources/generated";
 
@@ -23,24 +24,32 @@ async function loadIfEnabled<Config, MetaResolver>(
 export interface ClientInfo {
   builtIn?: BuiltIn.ClientInfo;
   manyDecks?: ManyDecks.ClientInfo;
+  crCast?: CrCast.ClientInfo;
   jsonAgainstHumanity?: JsonAgainstHumanity.ClientInfo;
 }
 
 export class Sources {
   public readonly builtIn?: BuiltIn.MetaResolver;
   public readonly manyDecks?: ManyDecks.MetaResolver;
+  public readonly crCast?: CrCast.MetaResolver;
   public readonly jsonAgainstHumanity?: JsonAgainstHumanity.MetaResolver;
 
   public constructor(
     builtIn?: BuiltIn.MetaResolver,
     manyDecks?: ManyDecks.MetaResolver,
+    crCast?: CrCast.MetaResolver,
     jsonAgainstHumanity?: JsonAgainstHumanity.MetaResolver,
   ) {
-    if (builtIn === undefined && manyDecks === undefined) {
+    if (
+      builtIn === undefined &&
+      manyDecks === undefined &&
+      crCast === undefined
+    ) {
       throw new Error("At least one source must be enabled.");
     }
     this.builtIn = builtIn;
     this.manyDecks = manyDecks;
+    this.crCast = crCast;
     this.jsonAgainstHumanity = jsonAgainstHumanity;
   }
 
@@ -53,6 +62,9 @@ export class Sources {
         : {}),
       ...(this.manyDecks !== undefined
         ? { manyDecks: this.manyDecks.clientInfo() }
+        : {}),
+      ...(this.crCast !== undefined
+        ? { crCast: this.crCast.clientInfo() }
         : {}),
       ...(this.jsonAgainstHumanity !== undefined
         ? { jsonAgainstHumanity: this.jsonAgainstHumanity.clientInfo() }
@@ -69,6 +81,9 @@ export class Sources {
 
       case "ManyDecks":
         return this.manyDecks;
+
+      case "CrCast":
+        return this.crCast;
 
       case "JAH":
         return this.jsonAgainstHumanity;
@@ -132,12 +147,18 @@ export class Sources {
   };
 
   public static async from(config: Config.Sources): Promise<Sources> {
-    const [builtInMeta, manyDecksMeta, jsonAgainstHumanityMeta] =
+    const [builtInMeta, manyDecksMeta, crCastMeta, jsonAgainstHumanityMeta] =
       await Promise.all([
         loadIfEnabled(config.builtIn, BuiltIn.load),
         loadIfEnabled(config.manyDecks, ManyDecks.load),
+        loadIfEnabled(config.crCast, CrCast.load),
         loadIfEnabled(config.jsonAgainstHumanity, JsonAgainstHumanity.load),
       ]);
-    return new Sources(builtInMeta, manyDecksMeta, jsonAgainstHumanityMeta);
+    return new Sources(
+      builtInMeta,
+      manyDecksMeta,
+      crCastMeta,
+      jsonAgainstHumanityMeta,
+    );
   }
 }

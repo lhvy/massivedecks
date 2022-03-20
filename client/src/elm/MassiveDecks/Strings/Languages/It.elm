@@ -831,19 +831,31 @@ translate _ mdString =
             [ ref source, Text " non ha potuto fornire il mazzo. Prova più tardi o prova un’altra sorgente." ]
 
         -- TODO: Translate
-        ManyDecks ->
+        DeckCodeShort ->
             [ Missing ]
+
+        -- TODO: Translate
+        ManyDecks ->
+            [ Text "Many Decks" ]
 
         -- TODO: Translate
         ManyDecksDeckCodeTitle ->
             [ Missing ]
 
         -- TODO: Translate
-        ManyDecksDeckCodeShort ->
+        ManyDecksWhereToGet ->
             [ Missing ]
 
         -- TODO: Translate
-        ManyDecksWhereToGet ->
+        CrCast ->
+            [ Text "CrCast" ]
+
+        -- TODO: Translate
+        CrCastDeckCodeTitle ->
+            [ Missing ]
+
+        -- TODO: Translate
+        CrCastWhereToGet ->
             [ Missing ]
 
         -- TODO: Translate

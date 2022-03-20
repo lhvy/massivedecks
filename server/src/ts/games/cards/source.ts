@@ -5,6 +5,7 @@ import { Generated } from "./sources/generated";
 import { BuiltIn } from "./sources/builtIn";
 import { ManyDecks } from "./sources/many-decks";
 import { JsonAgainstHumanity } from "./sources/json-against-humanity";
+import { CrCast } from "./sources/crcast";
 
 /**
  * A source for a card or deck.
@@ -14,7 +15,7 @@ export type Source = External | Custom | Generated;
 /**
  * An external source for a card or deck.
  */
-export type External = BuiltIn | ManyDecks | JsonAgainstHumanity;
+export type External = BuiltIn | ManyDecks | CrCast | JsonAgainstHumanity;
 
 /**
  * More information that can be looked up given a source.
@@ -84,7 +85,8 @@ export interface LimitedResolver<S extends External> {
  * Resolve information about the given source.
  */
 export abstract class Resolver<S extends External>
-  implements LimitedResolver<S> {
+  implements LimitedResolver<S>
+{
   /**
    * The source in question.
    */
@@ -115,13 +117,13 @@ export abstract class Resolver<S extends External>
    * Note that if you have a fresh summary, you should check if that has a
    * tag first.
    */
-  public abstract  getTag(): Promise<Cache.Tag | undefined>;
+  public abstract getTag(): Promise<Cache.Tag | undefined>;
 
   /**
    * The summary for the source, and potentially the templates if efficient to
    * return both.
    */
-  public abstract  atLeastSummary(): Promise<AtLeastSummary>;
+  public abstract atLeastSummary(): Promise<AtLeastSummary>;
 
   /**
    * The summary for the source.
@@ -141,7 +143,7 @@ export abstract class Resolver<S extends External>
    * The deck templates for the source, and potentially the summary if
    * efficient to return both.
    */
-  public abstract  atLeastTemplates(): Promise<AtLeastTemplates>;
+  public abstract atLeastTemplates(): Promise<AtLeastTemplates>;
 
   /**
    * The deck templates for the source.

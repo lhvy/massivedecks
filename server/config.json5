@@ -44,6 +44,18 @@
       simultaneousConnections: 2,
     },
 
+    // Allows players to load decks from Many Decks.
+    crCast: {
+      // The base URL to the instance of Many Decks. This should *not* have a trailing slash.
+      baseUrl: "https://castapi.clrtd.com",
+
+      // How long to wait for a response from Many Decks before giving up and telling the user there is a problem.
+      timeout: "PT10S",
+
+      // The number of connections the server can make to Many Decks at one time.
+      simultaneousConnections: 2,
+    },
+
     // Allows players to use decks from JSON Against Humanity
     jsonAgainstHumanity: {
       aboutUrl: "https://github.com/crhallberg/json-against-humanity",

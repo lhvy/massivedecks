@@ -260,6 +260,14 @@ enhanceHtml shared context mdString unenhanced =
                 Nothing ->
                     unenhanced
 
+        CrCast ->
+            case shared.sources.crCast of
+                Just { baseUrl } ->
+                    [ Html.blankA [ HtmlA.href baseUrl ] unenhanced ]
+
+                Nothing ->
+                    unenhanced
+
         JsonAgainstHumanity ->
             case shared.sources.jsonAgainstHumanity of
                 Just { aboutUrl } ->

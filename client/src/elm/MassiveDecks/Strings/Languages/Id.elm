@@ -813,17 +813,26 @@ translate _ mdString =
         SourceServiceFailure { source } ->
             [ ref source, Text " gagal menyediakan dek. Silakan coba lagi nanti atau coba sumber lain." ]
 
+        DeckCodeShort ->
+            [ Text "Kode dek setidaknya harus terdiri dari lima karakter." ]
+
         ManyDecks ->
             [ Text "Banyak Deck" ]
 
         ManyDecksDeckCodeTitle ->
             [ Text "Kode Dek" ]
 
-        ManyDecksDeckCodeShort ->
-            [ Text "Kode dek setidaknya harus terdiri dari lima karakter." ]
-
         ManyDecksWhereToGet ->
             [ Text "Anda dapat membuat dan menemukan dek untuk dimainkan ", ref ManyDecks, Text "." ]
+
+        CrCast ->
+            [ Text "CrCast" ]
+
+        CrCastDeckCodeTitle ->
+            [ Text "Kode Dek" ]
+
+        CrCastWhereToGet ->
+            [ Text "Anda dapat membuat dan menemukan dek untuk dimainkan ", ref CrCast, Text "." ]
 
         JsonAgainstHumanity ->
             [ Text "JSON Melawan Kemanusiaan" ]

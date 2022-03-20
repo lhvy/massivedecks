@@ -1,4 +1,4 @@
-module MassiveDecks.Card.Source.ManyDecks exposing
+module MassiveDecks.Card.Source.CrCast exposing
     ( generalMethods
     , methods
     )
@@ -9,15 +9,16 @@ import Html as Html exposing (Html)
 import Html.Attributes as HtmlA
 import Html.Events as HtmlE
 import Json.Decode as Json
-import MassiveDecks.Card.Source.ManyDecks.Model exposing (..)
+import MassiveDecks.Card.Source.CrCast.Model as CrCast exposing (..)
 import MassiveDecks.Card.Source.Methods as Source
-import MassiveDecks.Card.Source.Model as Source
+import MassiveDecks.Card.Source.Model as Source exposing (Source)
 import MassiveDecks.Components.Form.Message as Message exposing (Message)
 import MassiveDecks.Model exposing (..)
 import MassiveDecks.Pages.Lobby.Configure.Decks.Model exposing (DeckOrError)
 import MassiveDecks.Strings as Strings exposing (MdString)
 import MassiveDecks.Strings.Languages as Lang
 import MassiveDecks.Util.Maybe as Maybe
+import Material.Select as Select
 import Material.TextField as TextField
 import Url.Builder as Url
 
@@ -53,23 +54,23 @@ generalMethods =
 
 id : () -> Source.General
 id () =
-    Source.GManyDecks
+    Source.GCrCast
 
 
 name : () -> MdString
 name () =
-    Strings.ManyDecks
+    Strings.CrCast
 
 
 empty : Shared -> Source.External
 empty _ =
-    "" |> deckCode |> Source.ManyDecks
+    "" |> deckCode |> Source.CrCast
 
 
 equals : DeckCode -> Source.External -> Bool
 equals dc source =
     case source of
-        Source.ManyDecks other ->
+        Source.CrCast other ->
             dc == other
 
         _ ->
@@ -78,7 +79,7 @@ equals dc source =
 
 messages : () -> List (Message msg)
 messages () =
-    [ Strings.ManyDecksWhereToGet |> Message.info ]
+    [ Strings.CrCastWhereToGet |> Message.info ]
 
 
 problems : DeckCode -> () -> List (Message msg)
@@ -94,10 +95,10 @@ editor : DeckCode -> Shared -> List DeckOrError -> (Source.External -> msg) -> M
 editor dc shared _ update submit noOp =
     Html.div [ HtmlA.class "primary" ]
         [ TextField.view shared
-            Strings.ManyDecksDeckCodeTitle
+            Strings.CrCastDeckCodeTitle
             TextField.Text
             (dc |> toString)
-            [ HtmlE.onInput (deckCode >> Source.ManyDecks >> update)
+            [ HtmlE.onInput (deckCode >> Source.CrCast >> update)
             , HtmlE.keyCode
                 |> Json.map (\k -> submit |> Maybe.andThen (Maybe.justIf (k == 13)) |> Maybe.withDefault noOp)
                 |> HtmlE.on "keydown"
@@ -112,7 +113,7 @@ details dc shared =
             Url.crossOrigin baseUrl [ "decks", dc |> toString ] []
     in
     { name = (() |> name |> Lang.string shared) ++ " " ++ (dc |> toString)
-    , url = shared.sources.manyDecks |> Maybe.map (.baseUrl >> url)
+    , url = shared.sources.crCast |> Maybe.map (.baseUrl >> url)
     , author = Nothing
     , translator = Nothing
     , language = Nothing
@@ -123,12 +124,12 @@ tooltip : DeckCode -> (String -> List (Html msg) -> Html msg) -> Maybe ( String,
 tooltip dc tooltipRender =
     let
         forId =
-            "many-decks-deck-code-" ++ toString dc
+            "crcast-deck-code-" ++ toString dc
 
         content =
             [ Html.p [ HtmlA.class "source-id" ]
                 [ logoInternal
-                , Html.div [ HtmlA.class "many-decks-deck-code" ] [ dc |> toString |> Html.text ]
+                , Html.div [ HtmlA.class "crcast-deck-code" ] [ dc |> toString |> Html.text ]
                 ]
             ]
     in

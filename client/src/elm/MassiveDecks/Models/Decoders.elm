@@ -33,6 +33,7 @@ import MassiveDecks.Card.Parts as Parts exposing (Parts)
 import MassiveDecks.Card.Parts.Part as Part
 import MassiveDecks.Card.Play as Play exposing (Play)
 import MassiveDecks.Card.Source.BuiltIn.Model as BuiltIn
+import MassiveDecks.Card.Source.CrCast.Model as CrCast
 import MassiveDecks.Card.Source.Generated.Model as Generated
 import MassiveDecks.Card.Source.JsonAgainstHumanity.Model as JsonAgianstHumanity
 import MassiveDecks.Card.Source.ManyDecks.Model as ManyDecks
@@ -66,7 +67,7 @@ sourceInfo : Json.Decoder Source.Info
 sourceInfo =
     let
         atLeastOne info =
-            if [ info.builtIn /= Nothing, info.manyDecks /= Nothing ] |> List.any identity then
+            if [ info.builtIn /= Nothing, info.manyDecks /= Nothing, info.crCast /= Nothing ] |> List.any identity then
                 info |> Json.succeed
 
             else
@@ -75,6 +76,7 @@ sourceInfo =
     Json.succeed Source.Info
         |> Json.optional "builtIn" (builtInInfo |> Json.map Just) Nothing
         |> Json.optional "manyDecks" (manyDecksInfo |> Json.map Just) Nothing
+        |> Json.optional "crCast" (crCastInfo |> Json.map Just) Nothing
         |> Json.optional "jsonAgainstHumanity" (jsonAgainstHumanityInfo |> Json.map Just) Nothing
         |> Json.andThen atLeastOne
 
@@ -88,6 +90,12 @@ builtInInfo =
 manyDecksInfo : Json.Decoder ManyDecks.Info
 manyDecksInfo =
     Json.succeed ManyDecks.Info
+        |> Json.required "baseUrl" Json.string
+
+
+crCastInfo : Json.Decoder CrCast.Info
+crCastInfo =
+    Json.succeed CrCast.Info
         |> Json.required "baseUrl" Json.string
 
 
@@ -265,6 +273,9 @@ externalSourceByGeneral general =
 
         Source.GManyDecks ->
             Json.field "deckCode" (Json.string |> Json.map ManyDecks.deckCode) |> Json.map Source.ManyDecks
+
+        Source.GCrCast ->
+            Json.field "deckCode" (Json.string |> Json.map CrCast.deckCode) |> Json.map Source.CrCast
 
         Source.GJsonAgainstHumanity ->
             Json.field "id" (JsonAgianstHumanity.idDecoder |> Json.map Source.JsonAgainstHumanity)

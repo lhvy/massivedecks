@@ -824,17 +824,26 @@ translate _ mdString =
         SourceServiceFailure { source } ->
             [ ref source, Text " hat es nicht geschafft, den Kartensatz bereitzustellen. Bitte versuchen Sie es später noch einmal oder versuchen Sie eine andere Quelle." ]
 
+        DeckCodeShort ->
+            [ Text "Ein Kartensatz-Code muss mindestens fünf Zeichen lang sein." ]
+
         ManyDecks ->
             [ Text "Many Decks" ]
 
         ManyDecksDeckCodeTitle ->
             [ Text "Kartensatz-Code" ]
 
-        ManyDecksDeckCodeShort ->
-            [ Text "Ein Kartensatz-Code muss mindestens fünf Zeichen lang sein." ]
-
         ManyDecksWhereToGet ->
             [ Text "Sie können Kartensätze bei ", ref ManyDecks, Text " zum Spielen finden oder selber erstellen." ]
+
+        CrCast ->
+            [ Text "CrCast" ]
+
+        CrCastDeckCodeTitle ->
+            [ Text "Kartensatz-Code" ]
+
+        CrCastWhereToGet ->
+            [ Text "Sie können Kartensätze bei ", ref CrCast, Text " zum Spielen finden oder selber erstellen." ]
 
         JsonAgainstHumanity ->
             [ Text "JSON Against Humanity" ]
